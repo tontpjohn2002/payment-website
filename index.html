@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment for Nifty & Bank Nifty</title>
+</head>
+<body>
+    <h1>Buy Nifty or Bank Nifty Access</h1>
+    <button id="buyNifty">Buy Nifty</button>
+    <button id="buyBankNifty">Buy Bank Nifty</button>
+
+    <!-- Razorpay Checkout Script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        function initiatePayment(product) {
+            var options = {
+                "key": "rzp_test_s148tlUjjOyR7e", // Your API Key
+                "amount": product === "nifty" ? 10000 : 15000, // Amount in paisa (₹100 = 10000)
+                "currency": "INR",
+                "name": "Tony FX SM",
+                "description": `Purchase ${product} access`,
+                "handler": function (response) {
+                    // Display URL after payment
+                    if (product === "nifty") {
+                        alert("Payment Successful! Your Nifty URL: https://example.com/nifty");
+                    } else {
+                        alert("Payment Successful! Your Bank Nifty URL: https://in.tradingview.com/chart/BANKNIFTY/l6X7LkQu-BANKNIFTY-INSTITUTIONAL-LEVELS-FOR-17-12-2024/");
+                    }
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp = new Razorpay(options);
+            rzp.open();
+        }
+
+        document.getElementById('buyNifty').onclick = function() {
+            initiatePayment("nifty");
+        };
+
+        document.getElementById('buyBankNifty').onclick = function() {
+            initiatePayment("banknifty");
+        };
+    </script>
+</body>
+</html>
